@@ -52,16 +52,16 @@ for code1, code2 in pairs_main:
   label1 = main_criteria[code1]
   label2 = main_criteria[code2]
 
-  col1, col2, col3 = st.columns([3, 2, 3])
+  st.write(f"--- مقارنة بين: **{label1}** و **{label2}** ---")
+  col1, col2 = st.columns(2)
+
   with col1:
-    st.write(f"**{label1}**")
-  with col2:
     direction = st.radio(
-        f"الطرف الأرجح بين {code1} و {code2}",
-        [label1, "متساويان", label2],
+        f"الطرف الأرجح",
+        ["اختر...", label1, "متساويان", label2],
         key=f"dir_{code1}_{code2}",
     )
-  with col3:
+  with col2:
     choice = st.selectbox(
         f"درجة الأهمية",
         list(saaty_options.keys()),
@@ -105,6 +105,7 @@ def calculate_ahp(criteria_keys, ratings):
   return weights, cr, matrix
 
 
+st.markdown("---")
 if st.button("حساب النتائج وتصدير الملف"):
   weights, cr, mat = calculate_ahp(main_criteria.keys(), ratings_main)
 
